@@ -1,20 +1,21 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigModule } from '@nestjs/config';
-import z from 'zod';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+
+import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-      validationSchema: z.object({
-        PORT: z.string(),
-        POSTGRES_HOST: z.string(),
-        POSTGRES_PORT: z.string(),
-        POSTGRES_USER: z.string(),
-        POSTGRES_PASSWORD: z.string(),
-        POSTGRES_DB: z.string(),
+    DatabaseModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        host: configService.get('POSTGRES_HOST'),
+        port: configService.get('POSTGRES_PORT'),
+        user: configService.get('POSTGRES_USER'),
+        password: configService.get('POSTGRES_PASSWORD'),
+        database: configService.get('POSTGRES_DB'),
       }),
     }),
   ],
