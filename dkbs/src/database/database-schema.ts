@@ -7,31 +7,33 @@ import {
   integer,
 } from 'drizzle-orm/pg-core';
 
-export const topics = pgTable('topics', {
+const topics = pgTable('topics', {
   id: serial('id').primaryKey(),
-  name: varchar('name', { length: 255 }).notNull(),
-  content: text('content'),
+  name: varchar('name').notNull(),
+  content: text('content').notNull(),
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),
-  version: integer('version').default(1),
+  version: integer('version').notNull().default(1),
   parentTopicId: integer('parent_topic_id').references(() => topics.id),
 });
 
-export const resources = pgTable('resources', {
+const resources = pgTable('resources', {
   id: serial('id').primaryKey(),
-  topicId: integer('topic_id').references(() => topics.id),
-  url: varchar('url', { length: 255 }).notNull(),
+  topicId: integer('topic_id')
+    .references(() => topics.id)
+    .notNull(),
+  url: varchar('url').notNull(),
   description: text('description'),
-  type: varchar('type', { length: 50 }).notNull(),
+  type: varchar('type').notNull(),
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),
 });
 
-export const users = pgTable('users', {
+const users = pgTable('users', {
   id: serial('id').primaryKey(),
-  name: varchar('name', { length: 255 }).notNull(),
-  email: varchar('email', { length: 255 }).notNull().unique(),
-  role: varchar('role', { length: 50 }).notNull(),
+  name: varchar('name').notNull(),
+  email: varchar('email').notNull().unique(),
+  role: varchar('role').notNull(),
   createdAt: timestamp('created_at').defaultNow(),
 });
 
@@ -40,3 +42,5 @@ export const databaseSchema = {
   resources,
   users,
 };
+
+export { topics, resources, users };

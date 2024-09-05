@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 import { DatabaseModule } from './database/database.module';
+import { TopicsModule } from './topics/topics.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { DatabaseModule } from './database/database.module';
         database: configService.get('POSTGRES_DB'),
       }),
     }),
+    TopicsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
