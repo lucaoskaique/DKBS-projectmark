@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+  postgres:
+    container_name: postgres-nestjs-drizzle
+    image: postgres:16
+    ports:
+      - "5432:5432"
+    volumes:
+      - /data/postgres:/data/postgres
+    env_file:
+      - docker.env
+    networks:
+      - postgres
+  
+  pgadmin:
+    container_name: pgadmin-nestjs-drizzle
+    image: dpage/pgadmin4
+    ports:
+      - "8080:80"
+    env_file:
+      - docker.env
+    networks:
+      - postgres
+
+networks:
+  postgres:
+    driver: bridge
