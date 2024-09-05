@@ -1,13 +1,31 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-
-import { DatabaseModule } from './database/database.module';
 import { TopicsModule } from './topics/topics.module';
+import { DatabaseModule } from './database/database.module';
+import { z } from 'zod';
+
+const envSchema = z.object({
+  POSTGRES_HOST: z.string(),
+  POSTGRES_PORT: z.string(),
+  POSTGRES_USER: z.string(),
+  POSTGRES_PASSWORD: z.string(),
+  POSTGRES_DB: z.string(),
+});
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      validate: (config: Record<string, unknown>) => {
+        const result = envSchema.safeParse(config);
+        if (result.success === false) {
+          throw new Error(
+            `Config validation error: ${result.error.toString()}`,
+          );
+        }
+        return result.data;
+      },
+    }),
     DatabaseModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -21,7 +39,6 @@ import { TopicsModule } from './topics/topics.module';
     }),
     TopicsModule,
   ],
-  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}

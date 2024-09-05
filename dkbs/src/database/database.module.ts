@@ -4,13 +4,12 @@ import {
   CONNECTION_POOL,
   DATABASE_OPTIONS,
 } from './database.module-definition';
-import { DatabaseOptions } from './database-options';
-import { Pool } from 'pg';
 import { DrizzleService } from './drizzle.service';
+import { Pool } from 'pg';
+import { DatabaseOptions } from './database-options';
 
 @Global()
 @Module({
-  imports: [DrizzleService],
   providers: [
     DrizzleService,
     {
@@ -23,13 +22,11 @@ import { DrizzleService } from './drizzle.service';
           user: databaseOptions.user,
           password: databaseOptions.password,
           database: databaseOptions.database,
-          ssl: {
-            rejectUnauthorized: false,
-          },
+          ssl: false,
         });
       },
     },
   ],
-  exports: [],
+  exports: [DrizzleService],
 })
 export class DatabaseModule extends ConfigurableDatabaseModule {}
