@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateTopicDto } from './dto/create-topic.dto';
 import { UpdateTopicDto } from './dto/update-topic.dto';
-import { DrizzleService } from 'src/database/drizzle.service';
-import { topics } from 'src/database/database-schema';
+import { DrizzleService } from '../database/drizzle.service';
+import { topics } from '../database/database-schema';
 import { eq } from 'drizzle-orm';
 
 @Injectable()
@@ -23,11 +23,11 @@ export class TopicsService {
   }
 
   async findAll() {
-    return this.drizzleService.db.select().from(topics).execute();
+    return await this.drizzleService.db.select().from(topics).execute();
   }
 
   async findOne(id: number) {
-    const topic = this.drizzleService.db
+    const topic = await this.drizzleService.db
       .select()
       .from(topics)
       .where(eq(topics.id, id))
@@ -49,7 +49,7 @@ export class TopicsService {
       .where(eq(topics.id, id))
       .returning();
 
-    if (updatedTopic[0]) {
+    if (!updatedTopic[0]) {
       throw new NotFoundException();
     }
 
