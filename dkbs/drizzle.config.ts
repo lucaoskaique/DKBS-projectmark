@@ -9,11 +9,11 @@ export default defineConfig({
   out: './drizzle',
   dialect: 'postgresql',
   dbCredentials: {
-    host: configService.get('POSTGRES_HOST'),
-    port: configService.get('POSTGRES_PORT'),
-    user: configService.get('POSTGRES_USER'),
-    password: configService.get('POSTGRES_PASSWORD'),
-    database: configService.get('POSTGRES_DB'),
+    host: configService.get<string>('POSTGRES_HOST', 'localhost'),
+    port: configService.get<number>('POSTGRES_PORT', 5432),
+    user: configService.get<string>('POSTGRES_USER', 'defaultUser'),
+    password: configService.get<string>('POSTGRES_PASSWORD', 'defaultPassword'),
+    database: configService.get<string>('POSTGRES_DB', 'defaultDatabase'),
     ssl: false,
   },
 });
