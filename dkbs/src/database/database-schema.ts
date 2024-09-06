@@ -1,4 +1,4 @@
-import { InferSelectModel } from 'drizzle-orm';
+import { InferInsertModel, InferSelectModel } from 'drizzle-orm';
 import {
   pgTable,
   serial,
@@ -73,6 +73,10 @@ const RESOURCE_TYPE = resourceTypeEnum.enumValues;
 const USER_ROLE = userRoleEnum.enumValues;
 export type ResourceType = (typeof RESOURCE_TYPE)[number];
 export type UserRole = (typeof USER_ROLE)[number];
+
+export type NewTopic = InferInsertModel<typeof topics>;
+export type NewResource = InferInsertModel<typeof resources>;
+export type NewUser = InferInsertModel<typeof users>;
 
 export type Topic = InferSelectModel<typeof topics>;
 export type Resource = InferSelectModel<typeof resources>;
