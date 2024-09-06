@@ -5,6 +5,12 @@ import { DrizzleService } from '../database/drizzle.service';
 import { topics } from '../database/database-schema';
 import { eq, and, desc, or } from 'drizzle-orm';
 
+interface TopicNode {
+  id: number;
+  name: string;
+  children: TopicNode[];
+}
+
 @Injectable()
 export class TopicsService {
   constructor(private readonly drizzleService: DrizzleService) {}
@@ -82,7 +88,6 @@ export class TopicsService {
       })
       .returning();
 
-    // Update the latest version reference of the original topic
     await this.drizzleService.db
       .update(topics)
       .set({ latestVersion: newVersion })
@@ -162,5 +167,72 @@ export class TopicsService {
       .execute();
 
     return allVersions;
+  }
+
+  async findShortestPath(
+    startTopicId: number,
+    endTopicId: number,
+  ): Promise<number[]> {
+    const visited: Set<number> = new Set();
+    const queue: { topicId: number; path: number[] }[] = [
+      { topicId: startTopicId, path: [startTopicId] },
+    ];
+
+    while (queue.length > 0) {
+      const item = queue.shift();
+      if (!item) continue;
+
+      const { topicId, path } = item;
+
+      if (topicId === endTopicId) {
+        return path;
+      }
+
+      if (visited.has(topicId)) {
+        continue;
+      }
+
+      visited.add(topicId);
+
+      const childTopics = await this.getChildTopics(topicId);
+
+      for (const childTopic of childTopics) {
+        if (!visited.has(childTopic.id)) {
+          queue.push({
+            topicId: childTopic.id,
+            path: [...path, childTopic.id],
+          });
+        }
+      }
+    }
+
+    throw new NotFoundException('No path found');
+  }
+
+  async getTopicTree(topicId: number): Promise<any> {
+    const topic = await this.findOne(topicId);
+    if (!topic) {
+      throw new NotFoundException(`Topic with ID ${topicId} not found`);
+    }
+
+    const buildTree = async (currentTopicId: number): Promise<any> => {
+      const currentTopic = await this.findOne(currentTopicId);
+      const childTopics = await this.getChildTopics(currentTopicId);
+
+      const node: TopicNode = {
+        id: currentTopic.id,
+        name: currentTopic.name,
+        children: [],
+      };
+
+      for (const childTopic of childTopics) {
+        const childNode = await buildTree(childTopic.id);
+        node.children.push(childNode);
+      }
+
+      return node;
+    };
+
+    return buildTree(topicId);
   }
 }

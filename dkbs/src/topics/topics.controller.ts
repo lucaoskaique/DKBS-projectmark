@@ -52,4 +52,9 @@ export class TopicsController {
   ) {
     return this.topicsService.findSpecificVersion(+id, +version);
   }
+
+  @Get(':id/tree')
+  async getTopicTree(@Param('id') id: string) {
+    return this.topicsService.getTopicTree(+id);
+  }
 }

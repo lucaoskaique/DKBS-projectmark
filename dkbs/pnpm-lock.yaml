@@ -44,6 +44,9 @@ importers:
       drizzle-orm:
         specifier: ^0.33.0
         version: 0.33.0(@types/pg@8.11.8)(@xata.io/client@0.30.0(typescript@5.5.4))(pg@8.12.0)
+      drizzle-zod:
+        specifier: ^0.5.1
+        version: 0.5.1(drizzle-orm@0.33.0(@types/pg@8.11.8)(@xata.io/client@0.30.0(typescript@5.5.4))(pg@8.12.0))(zod@3.23.8)
       passport-jwt:
         specifier: ^4.0.1
         version: 4.0.1
@@ -60,6 +63,9 @@ importers:
         specifier: ^3.23.8
         version: 3.23.8
     devDependencies:
+      '@faker-js/faker':
+        specifier: ^9.0.0
+        version: 9.0.0
       '@nestjs/cli':
         specifier: ^10.0.0
         version: 10.4.5(esbuild@0.19.12)
@@ -624,6 +630,10 @@ packages:
   '@eslint/js@8.57.0':
     resolution: {integrity: sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+
+  '@faker-js/faker@9.0.0':
+    resolution: {integrity: sha512-dTDHJSmz6c1OJ6HO7jiUiIb4sB20Dlkb3pxYsKm0qTXm2Bmj97rlXIhlvaFsW2rvCi+OLlwKLVSS6ZxFUVZvjQ==}
+    engines: {node: '>=18.0.0', npm: '>=9.0.0'}
 
   '@humanwhocodes/config-array@0.11.14':
     resolution: {integrity: sha512-3T8LkOmg45BV5FICb15QQMsyUSWrQ8AygVfC7ZG32zOalnqrilm018ZVCw0eapXux8FtA33q8PSRSstjee3jSg==}
@@ -1658,6 +1668,12 @@ packages:
         optional: true
       sqlite3:
         optional: true
+
+  drizzle-zod@0.5.1:
+    resolution: {integrity: sha512-C/8bvzUH/zSnVfwdSibOgFjLhtDtbKYmkbPbUCq46QZyZCH6kODIMSOgZ8R7rVjoI+tCj3k06MRJMDqsIeoS4A==}
+    peerDependencies:
+      drizzle-orm: '>=0.23.13'
+      zod: '*'
 
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
@@ -3809,6 +3825,8 @@ snapshots:
 
   '@eslint/js@8.57.0': {}
 
+  '@faker-js/faker@9.0.0': {}
+
   '@humanwhocodes/config-array@0.11.14':
     dependencies:
       '@humanwhocodes/object-schema': 2.0.3
@@ -4972,6 +4990,11 @@ snapshots:
       '@types/pg': 8.11.8
       '@xata.io/client': 0.30.0(typescript@5.5.4)
       pg: 8.12.0
+
+  drizzle-zod@0.5.1(drizzle-orm@0.33.0(@types/pg@8.11.8)(@xata.io/client@0.30.0(typescript@5.5.4))(pg@8.12.0))(zod@3.23.8):
+    dependencies:
+      drizzle-orm: 0.33.0(@types/pg@8.11.8)(@xata.io/client@0.30.0(typescript@5.5.4))(pg@8.12.0)
+      zod: 3.23.8
 
   eastasianwidth@0.2.0: {}
 
