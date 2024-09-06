@@ -5,6 +5,7 @@ import {
   text,
   timestamp,
   integer,
+  boolean,
 } from 'drizzle-orm/pg-core';
 
 const topics = pgTable('topics', {
@@ -14,7 +15,9 @@ const topics = pgTable('topics', {
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),
   version: integer('version').notNull().default(1),
+  latestVersion: integer('latest_version').notNull().default(1),
   parentTopicId: integer('parent_topic_id').references(() => topics.id),
+  isDeleted: boolean('is_deleted').notNull().default(false),
 });
 
 const resources = pgTable('resources', {
