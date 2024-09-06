@@ -1,3 +1,4 @@
+import { InferSelectModel } from 'drizzle-orm';
 import {
   pgTable,
   serial,
@@ -6,9 +7,31 @@ import {
   timestamp,
   integer,
   boolean,
+  pgEnum,
 } from 'drizzle-orm/pg-core';
 
-const topics = pgTable('topics', {
+export enum Type {
+  Video = 'VIDEO',
+  Article = 'ARTICLE',
+  Pdf = 'PDF',
+}
+
+export enum Role {
+  Admin = 'ADMIN',
+  Editor = 'EDITOR',
+  Viewer = 'VIEWER',
+}
+
+export function enumToPgEnum<T extends Record<string, any>>(
+  myEnum: T,
+): [T[keyof T], ...T[keyof T][]] {
+  return Object.values(myEnum).map((value: any) => `${value}`) as any;
+}
+
+export const resourceTypeEnum = pgEnum('type', enumToPgEnum(Type));
+export const userRoleEnum = pgEnum('role', enumToPgEnum(Role));
+
+export const topics = pgTable('topics', {
   id: serial('id').primaryKey(),
   name: varchar('name').notNull(),
   content: text('content').notNull(),
@@ -20,23 +43,23 @@ const topics = pgTable('topics', {
   isDeleted: boolean('is_deleted').notNull().default(false),
 });
 
-const resources = pgTable('resources', {
+export const resources = pgTable('resources', {
   id: serial('id').primaryKey(),
   topicId: integer('topic_id')
     .references(() => topics.id)
     .notNull(),
   url: varchar('url').notNull(),
   description: text('description'),
-  type: varchar('type').notNull(),
+  type: resourceTypeEnum('type').notNull(),
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),
 });
 
-const users = pgTable('users', {
+export const users = pgTable('users', {
   id: serial('id').primaryKey(),
   name: varchar('name').notNull(),
   email: varchar('email').notNull().unique(),
-  role: varchar('role').notNull(),
+  role: userRoleEnum('role').default(Role.Viewer),
   createdAt: timestamp('created_at').defaultNow(),
 });
 
@@ -46,4 +69,11 @@ export const databaseSchema = {
   users,
 };
 
-export { topics, resources, users };
+const RESOURCE_TYPE = resourceTypeEnum.enumValues;
+const USER_ROLE = userRoleEnum.enumValues;
+export type ResourceType = (typeof RESOURCE_TYPE)[number];
+export type UserRole = (typeof USER_ROLE)[number];
+
+export type Topic = InferSelectModel<typeof topics>;
+export type Resource = InferSelectModel<typeof resources>;
+export type User = InferSelectModel<typeof users>;
