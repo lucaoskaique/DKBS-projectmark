@@ -45,6 +45,7 @@ export class UsersService {
       .set({
         name: updateUserDto.name,
         email: updateUserDto.email,
+        role: updateUserDto.role,
       })
       .where(eq(users.id, id))
       .returning();

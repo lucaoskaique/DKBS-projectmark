@@ -1,10 +1,11 @@
-import { IsString, IsNotEmpty, IsEnum, IsNumber } from 'class-validator';
-
-enum ResourceType {
-  Video = 'video',
-  Article = 'article',
-  PDF = 'pdf',
-}
+import {
+  IsString,
+  IsNotEmpty,
+  IsEnum,
+  IsNumber,
+  IsOptional,
+} from 'class-validator';
+import { Type } from 'src/database/database-schema';
 
 export class CreateResourceDto {
   @IsNumber()
@@ -16,10 +17,10 @@ export class CreateResourceDto {
   url: string;
 
   @IsString()
-  @IsNotEmpty()
-  description: string;
+  @IsOptional()
+  description?: string;
 
-  @IsEnum(ResourceType)
+  @IsEnum(Type)
   @IsNotEmpty()
-  type: ResourceType;
+  type: Type;
 }

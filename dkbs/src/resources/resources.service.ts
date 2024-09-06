@@ -3,6 +3,7 @@ import { CreateResourceDto } from './dto/create-resource.dto';
 import { UpdateResourceDto } from './dto/update-resource.dto';
 import { DrizzleService } from '../database/drizzle.service';
 import { resources } from '../database/database-schema';
+import { eq } from 'drizzle-orm';
 
 @Injectable()
 export class ResourcesService {
@@ -14,8 +15,8 @@ export class ResourcesService {
       .values({
         topicId: createResourceDto.topicId,
         url: createResourceDto.url,
-        description: createResourceDto.description,
         type: createResourceDto.type,
+        description: createResourceDto.description || null,
       })
       .returning();
 
@@ -30,8 +31,18 @@ export class ResourcesService {
     return `This action returns a #${id} resource`;
   }
 
-  update(id: number, updateResourceDto: UpdateResourceDto) {
-    return `This action updates a #${id} resource`;
+  async update(id: number, updateResourceDto: UpdateResourceDto) {
+    const updatedResource = await this.drizzleService.db
+      .update(resources)
+      .set({
+        url: updateResourceDto.url,
+        description: updateResourceDto.description,
+        type: updateResourceDto.type,
+      })
+      .where(eq(resources.id, id))
+      .returning();
+
+    return updatedResource[0];
   }
 
   remove(id: number) {
