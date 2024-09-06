@@ -4,6 +4,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TopicsModule } from './topics/topics.module';
 import { DatabaseModule } from './database/database.module';
 import { z } from 'zod';
+import { UsersModule } from './users/users.module';
+import { ResourcesModule } from './resources/resources.module';
 
 const envSchema = z.object({
   POSTGRES_HOST: z.string(),
@@ -38,6 +40,8 @@ const envSchema = z.object({
       }),
     }),
     TopicsModule,
+    UsersModule,
+    ResourcesModule,
   ],
   providers: [AppService],
 })
