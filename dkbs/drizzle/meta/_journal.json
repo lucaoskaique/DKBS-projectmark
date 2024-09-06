@@ -8,6 +8,13 @@
       "when": 1725643572605,
       "tag": "0000_create-initial-tables",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1725648667897,
+      "tag": "0001_create-password-collumn-usertable",
+      "breakpoints": true
     }
   ]
 }
