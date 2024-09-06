@@ -8,6 +8,7 @@ import { eq, and, desc, or } from 'drizzle-orm';
 interface TopicNode {
   id: number;
   name: string;
+  parentTopicId: number | null;
   children: TopicNode[];
 }
 
@@ -160,6 +161,8 @@ export class TopicsService {
         id: topics.id,
         version: topics.version,
         updatedAt: topics.updatedAt,
+        parentTopicId: topics.parentTopicId,
+        name: topics.name,
       })
       .from(topics)
       .where(or(eq(topics.id, id), eq(topics.parentTopicId, id)))
@@ -222,6 +225,7 @@ export class TopicsService {
       const node: TopicNode = {
         id: currentTopic.id,
         name: currentTopic.name,
+        parentTopicId: currentTopic.parentTopicId,
         children: [],
       };
 

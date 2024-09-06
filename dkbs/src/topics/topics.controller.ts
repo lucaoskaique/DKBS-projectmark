@@ -57,4 +57,12 @@ export class TopicsController {
   async getTopicTree(@Param('id') id: string) {
     return this.topicsService.getTopicTree(+id);
   }
+
+  @Get(':id/shortest-path/:targetId')
+  async findShortestPath(
+    @Param('id') id: number,
+    @Param('targetId') targetId: number,
+  ) {
+    return this.topicsService.findShortestPath(id, targetId);
+  }
 }
