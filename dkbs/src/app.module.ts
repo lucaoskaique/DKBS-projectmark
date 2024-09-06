@@ -6,6 +6,7 @@ import { DatabaseModule } from './database/database.module';
 import { z } from 'zod';
 import { UsersModule } from './users/users.module';
 import { ResourcesModule } from './resources/resources.module';
+import { AuthModule } from './auth/auth.module';
 
 const envSchema = z.object({
   POSTGRES_HOST: z.string(),
@@ -45,6 +46,7 @@ const envSchema = z.object({
     TopicsModule,
     UsersModule,
     ResourcesModule,
+    AuthModule,
   ],
   providers: [AppService],
 })

@@ -15,6 +15,7 @@ export class UsersService {
       .values({
         name: createUserDto.name,
         email: createUserDto.email,
+        password: createUserDto.password,
       })
       .returning();
 
