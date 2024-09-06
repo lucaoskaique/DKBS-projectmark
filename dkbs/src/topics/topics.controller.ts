@@ -39,4 +39,17 @@ export class TopicsController {
   remove(@Param('id') id: string) {
     return this.topicsService.remove(+id);
   }
+
+  @Get(':id/versions')
+  getTopicVersions(@Param('id') id: string) {
+    return this.topicsService.getTopicVersions(+id);
+  }
+
+  @Get(':id/version/:version')
+  findSpecificVersion(
+    @Param('id') id: string,
+    @Param('version') version: string,
+  ) {
+    return this.topicsService.findSpecificVersion(+id, +version);
+  }
 }
