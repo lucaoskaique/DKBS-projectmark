@@ -35,12 +35,9 @@ importers:
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
-      drizzle-kit:
-        specifier: 0.24.2
-        version: 0.24.2
       drizzle-orm:
         specifier: ^0.33.0
-        version: 0.33.0(@types/pg@8.11.8)(pg@8.12.0)
+        version: 0.33.0(@types/pg@8.11.8)(@xata.io/client@0.30.0(typescript@5.5.4))(pg@8.12.0)
       pg:
         specifier: ^8.12.0
         version: 8.12.0
@@ -81,6 +78,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: ^7.0.0
         version: 7.18.0(eslint@8.57.0)(typescript@5.5.4)
+      drizzle-kit:
+        specifier: 0.24.2
+        version: 0.24.2
       eslint:
         specifier: ^8.42.0
         version: 8.57.0
@@ -1069,6 +1069,11 @@ packages:
 
   '@webassemblyjs/wast-printer@1.12.1':
     resolution: {integrity: sha512-+X4WAlOisVWQMikjbcvY2e0rwPsKQ9F688lksZhBcPycBBuii3O7m8FACbDMWDojpAqvjIncrG8J0XHKyQfVeA==}
+
+  '@xata.io/client@0.30.0':
+    resolution: {integrity: sha512-+mVC4hnYZutcNg+ivBcsJxVXuBrcyidB/ogW6iDAsJtKXpPNbhGNL77v6sGXxzKYxjtDsK/EOntmYjZT3mgo7g==}
+    peerDependencies:
+      typescript: '>=4.5'
 
   '@xtuc/ieee754@1.2.0':
     resolution: {integrity: sha512-DX8nKgqcGwsc0eJSqYt5lwP4DH5FlHnmuWWBRy7X0NcaGR0ZtuyeESgMwTYVEtxmsNGY+qit4QYT/MIYTOTPeA==}
@@ -4392,6 +4397,11 @@ snapshots:
       '@webassemblyjs/ast': 1.12.1
       '@xtuc/long': 4.2.2
 
+  '@xata.io/client@0.30.0(typescript@5.5.4)':
+    dependencies:
+      typescript: 5.5.4
+    optional: true
+
   '@xtuc/ieee754@1.2.0': {}
 
   '@xtuc/long@4.2.2': {}
@@ -4854,9 +4864,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.33.0(@types/pg@8.11.8)(pg@8.12.0):
+  drizzle-orm@0.33.0(@types/pg@8.11.8)(@xata.io/client@0.30.0(typescript@5.5.4))(pg@8.12.0):
     optionalDependencies:
       '@types/pg': 8.11.8
+      '@xata.io/client': 0.30.0(typescript@5.5.4)
       pg: 8.12.0
 
   eastasianwidth@0.2.0: {}
