@@ -59,6 +59,7 @@ export const users = pgTable('users', {
   id: serial('id').primaryKey(),
   name: varchar('name').notNull(),
   email: varchar('email').notNull().unique(),
+  password: varchar('password').notNull(),
   role: userRoleEnum('role').default(Role.Viewer),
   createdAt: timestamp('created_at').defaultNow(),
 });
