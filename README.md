@@ -70,6 +70,11 @@ pnpm test
 | POST   | `/topics` | Create a new topic |
 | PUT    | `/topics/:id` | Update a topic by ID |
 | DELETE | `/topics/:id` | Delete a topic by ID |
+| GET    | `/topics/:id/versions` | Retrieve all versions of a topic |
+| GET    | `/topics/:id/versions/:version` | Retrieve a specific version of a topic |
+| GET    | `/topics/:id/tree` | Retrieve a topic and all its subtopics recursively |
+| GET    | `/topics/:id/shortest-path/:id` | Find the shortest path between two topics |
+
 
 ### Resources
 
