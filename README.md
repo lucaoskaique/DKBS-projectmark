@@ -6,7 +6,7 @@ This project is a RESTful API for a Dynamic Knowledge Base System. The system ma
 ## Requirements
 
 - Node.js
-- npm or yarn
+- PNPM
 - PostgreSQL (or any other database you prefer)
 - Docker
 
