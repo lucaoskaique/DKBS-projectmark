@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateTopicDto } from './dto/create-topic.dto';
 import { UpdateTopicDto } from './dto/update-topic.dto';
-import { DrizzleService } from '../database/drizzle.service';
-import { topics } from '../database/database-schema';
 import { eq, and, desc, or } from 'drizzle-orm';
+import { topics } from '@src/database/database-schema';
+import { DrizzleService } from '@src/database/drizzle.service';
 
 interface TopicNode {
   id: number;

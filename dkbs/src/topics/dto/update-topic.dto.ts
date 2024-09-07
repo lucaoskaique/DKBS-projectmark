@@ -14,5 +14,5 @@ export class UpdateTopicDto {
   @IsString()
   @IsNotEmpty()
   @IsOptional()
-  parentTopicId: number;
+  parentTopicId?: number;
 }

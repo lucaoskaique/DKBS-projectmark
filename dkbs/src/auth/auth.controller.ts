@@ -1,7 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { User } from 'src/database/database-schema';
-import { Public } from 'src/helpers/public-route.decorator';
 import { AuthService } from './auth.service';
+import { User } from '@src/database/database-schema';
+import { Public } from '@src/helpers/public-route.decorator';
 
 @Controller('auth')
 export class AuthController {

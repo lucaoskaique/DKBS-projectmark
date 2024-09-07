@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { DrizzleService } from 'src/database/drizzle.service';
+import { DrizzleService } from '@src/database/drizzle.service';
 import { users } from '../database/database-schema';
 import { eq } from 'drizzle-orm';
 

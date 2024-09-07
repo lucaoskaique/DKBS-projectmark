@@ -23,12 +23,18 @@ export class ResourcesService {
     return createdResource[0];
   }
 
-  findAll() {
-    return `This action returns all resources`;
+  async findAll() {
+    return await this.drizzleService.db.select().from(resources).execute();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} resource`;
+  async findOne(id: number) {
+    const resource = await this.drizzleService.db
+      .select()
+      .from(resources)
+      .where(eq(resources.id, id))
+      .execute();
+
+    return resource[0];
   }
 
   async update(id: number, updateResourceDto: UpdateResourceDto) {
@@ -45,7 +51,10 @@ export class ResourcesService {
     return updatedResource[0];
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} resource`;
+  async remove(id: number) {
+    await this.drizzleService.db
+      .delete(resources)
+      .where(eq(resources.id, id))
+      .execute();
   }
 }
