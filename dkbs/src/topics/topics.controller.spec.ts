@@ -41,6 +41,4 @@ describe('TopicsController', () => {
   it('should be defined', () => {
     expect(controller).toBeDefined();
   });
-
-  // Add more tests for controller methods here
 });
